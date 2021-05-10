@@ -22,8 +22,8 @@ def detectedFace(image,detector,confidence):
             x, y, width, height = det['box']
             keypoints = det['keypoints']
             cv2.rectangle(image, (x,y), (x+width,y+height), (0,0,255), 3)
-            cv2.putText(image,"{},{},{}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),cv2.FONT_HERSHEY_COMPLEX,0.6,(0,255,255),2)
-            
+            cv2.putText(image,"{},{},{:.2f}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),cv2.FONT_HERSHEY_COMPLEX,0.6,(0,255,255),2)
+           
     
     return image
 
@@ -39,7 +39,8 @@ def blurFace(image,detector,confidence):
             keypoints = det['keypoints']
             cv2.rectangle(image, (x,y), (x+width,y+height), (0,0,255), 3)
             cv2.putText(image,"{},{},{:.2f}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),cv2.FONT_HERSHEY_COMPLEX,0.6,(0,255,255),2)
-            roi = image[y:y+height/2,x:x+width]
+        
+            roi = image[y:y+height,x:x+width]
             
             roi = cv2.GaussianBlur(roi,(23,23),20)
             
