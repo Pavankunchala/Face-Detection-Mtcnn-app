@@ -16,14 +16,18 @@ def detectedFace(image,detector,confidence):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     #we are detecting the face using detector mtcnn
     result = detector.detect_faces(image)
+    num = 1
     
     for det in result:
         if det['confidence'] >= confidence:
             x, y, width, height = det['box']
             keypoints = det['keypoints']
             cv2.rectangle(image, (x,y), (x+width,y+height), (0,0,255), 3)
-            cv2.rectangle(image, (x,y-30),(x+width,y),(0,0,0), -1)
+            cv2.rectangle(image, (x,y-50),(x+width,y),(0,0,0), -1)
             cv2.putText(image,"{},{},{:.3f}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),0,0.6,(255,255,255),2)
+            cv2.putText(image,str(num),(x,y - 20),0,1.5,(255,255,255),3)
+            
+            num +=1
            
     
     return image
@@ -33,20 +37,23 @@ def blurFace(image,detector,confidence):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     #we are detecting the face using detector mtcnn
     result = detector.detect_faces(image)
+    num =1
     
     for det in result:
         if det['confidence'] >= confidence:
             x, y, width, height = det['box']
             keypoints = det['keypoints']
             cv2.rectangle(image, (x,y), (x+width,y+height), (0,0,255), 3)
-            cv2.rectangle(image, (x,y-30),(x+width,y),(0,0,0), -1)
+            cv2.rectangle(image, (x,y-50),(x+width,y),(0,0,0), -1)
             cv2.putText(image,"{},{},{:.2f}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),0,0.6,(255,255,255),2)
+            cv2.putText(image,str(num),(x,y - 20),0,1.5,(255,255,255),3)
         
             roi = image[y:y+height,x:x+width]
             
             roi = cv2.GaussianBlur(roi,(23,23),20)
             
             image[y:y+roi.shape[0],x:x+roi.shape[1]] = roi
+            num +=1
             
             
     return image
