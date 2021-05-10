@@ -8,7 +8,7 @@ import numpy as np
 
 
 
-DEMO_IMAGE = 'demo.jpg'
+DEMO_IMAGE = 'demo1.png'
 
 @st.cache
 def detectedFace(image,detector,confidence):
@@ -23,7 +23,7 @@ def detectedFace(image,detector,confidence):
             keypoints = det['keypoints']
             cv2.rectangle(image, (x,y), (x+width,y+height), (0,0,255), 3)
             cv2.rectangle(image, (x,y-30),(x+width,y),(0,0,0), -1)
-            cv2.putText(image,"{},{},{:.2f}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),0,0.6,(255,255,255),2)
+            cv2.putText(image,"{},{},{:.3f}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),0,0.6,(255,255,255),2)
            
     
     return image
