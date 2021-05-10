@@ -27,6 +27,28 @@ def detectedFace(image,detector,confidence):
     
     return image
 
+def blurFace(image,detector,confidence):
+    #converting the color to BGR 2 RGB
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    #we are detecting the face using detector mtcnn
+    result = detector.detect_faces(image)
+    
+    for det in result:
+        if det['confidence'] >= confidence:
+            x, y, width, height = det['box']
+            keypoints = det['keypoints']
+            cv2.rectangle(image, (x,y), (x+width,y+height), (0,0,255), 3)
+            roi = image[y:y+height,x:x+width]
+            
+            roi = cv2.GaussianBlur(roi,(23,23),20)
+            
+            image[y:y+roi.shape[0],x:x+roi.shape[1]] = roi
+            
+            
+    return image
+         
+    
+
 
 
 st.title('Face Detection by Roc4T')
@@ -56,8 +78,19 @@ detector = MTCNN(min_face_size=min_face_size,scale_factor=scale_factor)
 
 output_image = detectedFace(image,detector = detector,confidence = min_confidence)
 
+st.subheader('Detected Faces')
+
 st.image(
     output_image, caption=f"Detected Image",use_column_width= True,channels='BGR')
+
+
+st.subheader('Blurring the Faces')
+
+blurred_image = blurFace(image,detector = detector,confidence = min_confidence)
+
+
+st.image(
+    blurred_image, caption = f"Blurred Image",use_column_width= True,channels = 'BGR')
 
 
             
