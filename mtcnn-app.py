@@ -65,7 +65,7 @@ else:
 st.image(
     image, caption=f"Original Image",use_column_width= True)
 
-min_face_size = st.slider('Min Face Size you want to detect',min_value=1,max_value=100,value=10)
+min_face_size = st.slider('Min Face Size you want to detect',min_value=1,max_value=100,value=45)
 scale_factor =st.slider('Scale Factor',min_value=1,max_value=100,value=40)
 scale_factor = scale_factor/100
 
