@@ -94,10 +94,9 @@ detector = MTCNN(min_face_size=min_face_size,scale_factor=scale_factor)
 
 output_image = detectedFace(image,detector = detector,confidence = min_confidence)
 
-st.subheader('Detected Faces')
+#st.subheader('Detected Faces')
 
-st.image(
-    output_image, caption=f"Detected Image",use_column_width= True,channels='BGR')
+#st.image(output_image, caption=f"Detected Image",use_column_width= True,channels='BGR')
 
 
 st.subheader('Blurring the Faces')
