@@ -32,7 +32,7 @@ def detectedFace(image,detector,confidence):
     
     return image
 
-def blurFace(image,detector,confidence):
+def blurFace(image,detector,confidence,number):
     #converting the color to BGR 2 RGB
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     #we are detecting the face using detector mtcnn
@@ -47,12 +47,17 @@ def blurFace(image,detector,confidence):
             cv2.rectangle(image, (x,y-50),(x+width,y),(0,0,0), -1)
             cv2.putText(image,"{},{},{:.2f}".format(det['box'][2],det['box'][3],det['confidence']),(x,y),0,0.6,(255,255,255),2)
             cv2.putText(image,str(num),(x,y - 20),0,1.5,(255,255,255),3)
+            
+            if num == number:
+                pass
+            else:
+                
         
-            roi = image[y:y+height,x:x+width]
+                roi = image[y:y+height,x:x+width]
             
-            roi = cv2.GaussianBlur(roi,(23,23),20)
+                roi = cv2.GaussianBlur(roi,(23,23),20)
             
-            image[y:y+roi.shape[0],x:x+roi.shape[1]] = roi
+                image[y:y+roi.shape[0],x:x+roi.shape[1]] = roi
             num +=1
             
             
@@ -97,7 +102,9 @@ st.image(
 
 st.subheader('Blurring the Faces')
 
-blurred_image = blurFace(image,detector = detector,confidence = min_confidence)
+number = st.number_input('Face Id which you want to unblur',value=2)
+
+blurred_image = blurFace(image,detector = detector,confidence = min_confidence,number = number)
 
 
 st.image(
