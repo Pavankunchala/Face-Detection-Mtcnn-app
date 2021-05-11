@@ -6,7 +6,8 @@ import cv2
 from PIL import Image
 import numpy as np
 
-DEMO_IMAGE = 'demo3.png'
+DEMO_IMAGE = 'demo1.png'
+logo_image = 'logo.png'
 
 @st.cache
 def detectedFace(image,detector,confidence):
@@ -49,11 +50,11 @@ else:
 st.image(
     image, caption=f"Original Image",use_column_width= True)
 
-min_face_size = st.slider('Min Face Size you want to detect',min_value=1,max_value=100,value=45)
-scale_factor =st.slider('Scale Factor',min_value=1,max_value=100,value=40)
+min_face_size = st.slider('Min Face Size you want to detect',min_value=1,max_value=100,value=40)
+scale_factor =st.slider('Scale Factor',min_value=1,max_value=100,value=50)
 scale_factor = scale_factor/100
 
-min_confidence = st.slider('Min Confidence for detection',min_value=0,max_value=100,value=20)
+min_confidence = st.slider('Min Confidence for detection',min_value=0,max_value=100,value=90)
 
 min_confidence = min_confidence/100
 
@@ -66,3 +67,7 @@ output_image = detectedFace(image,detector = detector,confidence = min_confidenc
 st.subheader('Detected Faces')
 
 st.image(output_image, caption=f"Detected Image",use_column_width= True,channels='BGR')
+
+st.markdown('''# Created by  \n **[Roc4T Team](https://www.linkedin.com/company/rocfortech/)**
+            ''')
+st.image(logo_image, use_column_width = True)
