@@ -5,9 +5,17 @@ from mtcnn import MTCNN
 import cv2 
 from PIL import Image
 import numpy as np
+from pathlib import Path
+import base64
 
 DEMO_IMAGE = 'demo1.png'
 logo_image = 'logo.png'
+
+def img_to_bytes(img_path):
+    img_bytes = Path(img_path).read_bytes()
+    encoded = base64.b64encode(img_bytes).decode()
+    return encoded
+
 
 @st.cache
 def detectedFace(image,detector,confidence):
@@ -70,4 +78,9 @@ st.image(output_image, caption=f"Detected Image",use_column_width= True,channels
 
 st.markdown('''# Created by  \n **[Roc4T Team](https://www.linkedin.com/company/rocfortech/)**
             ''')
-st.image(logo_image, use_column_width = True)
+header_html = "<img src='data:image/png;base64,{}' class='img-fluid'>".format(
+    img_to_bytes("logo.png")
+)
+st.markdown(
+    header_html, unsafe_allow_html=True,
+)
